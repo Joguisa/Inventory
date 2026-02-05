@@ -45,12 +45,12 @@ namespace Inventory.Infrastructure.Persistence.Contexts
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedAt = DateTime.UtcNow;
-                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        entry.Entity.CreatedBy = _currentUserService.UserId ?? entry.Entity.CreatedBy ?? "System";
                         entry.Entity.IsDeleted = false;
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedAt = DateTime.UtcNow;
-                        entry.Entity.LastModifiedBy = _currentUserService.UserId;
+                        entry.Entity.LastModifiedBy = _currentUserService.UserId ?? "System";
                         break;
                 }
             }
