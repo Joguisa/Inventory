@@ -7,18 +7,15 @@ namespace Inventory.Application.Features.Products.Commands.CreateProduct
         public CreateProductCommandValidator()
         {
             RuleFor(p => p.Name)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotEmpty().WithMessage("{PropertyName} es requerido.")
                 .NotNull()
-                .MaximumLength(100).WithMessage("{PropertyName} must not exceed 100 characters.");
-
-            RuleFor(p => p.Price)
-                .GreaterThan(0).WithMessage("{PropertyName} must be greater than 0.");
-
-            RuleFor(p => p.StockQuantity)
-                .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0.");
+                .MaximumLength(100).WithMessage("{PropertyName} no debe exceder 100 caracteres.");
 
             RuleFor(p => p.CategoryId)
-                .GreaterThan(0).WithMessage("{PropertyName} must be a valid ID.");
+                .GreaterThan(0).WithMessage("{PropertyName} debe ser un ID válido.");
+
+            RuleFor(p => p.InventoryDetails)
+                .NotEmpty().WithMessage("Al menos un detalle de inventario es requerido.");
         }
     }
 }

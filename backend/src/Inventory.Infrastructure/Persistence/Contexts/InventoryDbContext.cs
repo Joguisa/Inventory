@@ -22,6 +22,7 @@ namespace Inventory.Infrastructure.Persistence.Contexts
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<ProductInventoryDetail> ProductInventoryDetails { get; set; }
         public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
         public DbSet<User> Users { get; set; }
 
@@ -33,6 +34,7 @@ namespace Inventory.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<Category>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Product>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Supplier>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<ProductInventoryDetail>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<InventoryTransaction>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
         }

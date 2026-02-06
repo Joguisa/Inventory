@@ -24,7 +24,7 @@ namespace Inventory.Application.Features.Products.Commands.CreateProduct
             var product = _mapper.Map<Product>(request);
             await _unitOfWork.Repository<Product>().AddAsync(product);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return new Response<int>(product.Id, "Product Created Successfully");
+            return new Response<int>(product.Id, "Producto creado correctamente");
         }
     }
 }

@@ -1,0 +1,14 @@
+<div class="layout-wrapper">
+    <p-menubar [model]="items">
+        <ng-template pTemplate="start">
+            <span class="font-bold text-xl px-4 text-primary">Inventario</span>
+        </ng-template>
+        <ng-template pTemplate="end">
+            <p-button label="Cerrar Sesión" icon="pi pi-sign-out" [text]="true" (onClick)="logout()"></p-button>
+        </ng-template>
+    </p-menubar>
+
+    <main class="p-4">
+        <router-outlet></router-outlet>
+    </main>
+</div>

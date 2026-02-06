@@ -1,0 +1,130 @@
+<form [formGroup]="form" (ngSubmit)="save()" class="flex flex-column gap-4 p-2">
+    <!-- Información Básica -->
+    <div class="grid">
+        <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="name" class="font-bold">Nombre del Producto <span class="text-red-500">*</span></label>
+            <input pInputText id="name" formControlName="name" class="w-full" placeholder="Ej: Monitor 50 pulgadas"
+                maxlength="50" />
+            <small class="p-error" *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">
+                El nombre es obligatorio.
+            </small>
+            <small class="p-error" *ngIf="form.get('name')?.errors?.['minlength'] && form.get('name')?.touched">
+                Mínimo 3 caracteres.
+            </small>
+            <small class="p-error" *ngIf="form.get('name')?.errors?.['maxlength'] && form.get('name')?.touched">
+                Máximo 20 caracteres.
+            </small>
+        </div>
+        <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="categoryId" class="font-bold">Categoría <span class="text-red-500">*</span></label>
+            <p-dropdown id="categoryId" formControlName="categoryId" [options]="categories()" optionLabel="name"
+                optionValue="id" placeholder="Seleccione Categoría" styleClass="w-full" [filter]="true" filterBy="name"
+                appendTo="body"></p-dropdown>
+            <small class="p-error" *ngIf="form.get('categoryId')?.invalid && form.get('categoryId')?.touched">
+                La categoría es obligatoria.
+            </small>
+        </div>
+        <div class="col-12 md:col-4 flex flex-column gap-2">
+            <label for="description" class="font-bold">Descripción</label>
+            <textarea pInputTextarea id="description" formControlName="description" rows="1" class="w-full"
+                [autoResize]="true" placeholder="Opcional..." maxlength="200"></textarea>
+            <small class="p-error"
+                *ngIf="form.get('description')?.errors?.['maxlength'] && form.get('description')?.touched">
+                Máximo 200 caracteres.
+            </small>
+        </div>
+    </div>
+
+    <p-divider align="left">
+        <div class="inline-flex align-items-center">
+            <i class="pi pi-list mr-2 text-primary"></i>
+            <b>Detalles de Inventario (Proveedores / Precios) <span class="text-red-500">*</span></b>
+        </div>
+    </p-divider>
+
+    <!-- Listado Dinámico de Inventario -->
+    <div formArrayName="inventoryDetails" class="flex flex-column gap-3">
+        <div *ngFor="let detail of inventoryDetails.controls; let i = index" [formGroupName]="i"
+            class="surface-card p-4 border-round shadow-2 relative mb-2">
+
+            <div class="flex justify-content-between align-items-center mb-3">
+                <span class="text-primary font-bold"><i class="pi pi-box mr-2"></i>Detalle #{{i + 1}}</span>
+                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                    (onClick)="removeInventoryDetail(i)" *ngIf="inventoryDetails.length > 1"
+                    pTooltip="Eliminar este detalle" tooltipPosition="left"></p-button>
+            </div>
+
+            <div class="grid">
+                <div class="col-12 md:col-3 flex flex-column gap-2">
+                    <label [for]="'supplierId' + i" class="text-sm font-semibold">Proveedor <span
+                            class="text-red-500">*</span></label>
+                    <p-dropdown [id]="'supplierId' + i" formControlName="supplierId" [options]="suppliers()"
+                        optionLabel="name" optionValue="id" placeholder="Seleccione" styleClass="w-full" appendTo="body"
+                        [filter]="true" filterBy="name"></p-dropdown>
+                    <small class="p-error"
+                        *ngIf="detail.get('supplierId')?.invalid && detail.get('supplierId')?.touched">
+                        Requerido.
+                    </small>
+                </div>
+                <div class="col-12 md:col-3 flex flex-column gap-2">
+                    <label [for]="'lotNumber' + i" class="text-sm font-semibold">Lote <span
+                            class="text-red-500">*</span></label>
+                    <input pInputText [id]="'lotNumber' + i" formControlName="lotNumber" class="p-inputtext-sm w-full"
+                        placeholder="L-001" maxlength="10" />
+                    <small class="p-error"
+                        *ngIf="detail.get('lotNumber')?.errors?.['required'] && detail.get('lotNumber')?.touched">
+                        Requerido.
+                    </small>
+                    <small class="p-error"
+                        *ngIf="detail.get('lotNumber')?.errors?.['maxlength'] && detail.get('lotNumber')?.touched">
+                        Máximo 10 carac.
+                    </small>
+                </div>
+                <div class="col-12 md:col-3 flex flex-column gap-2">
+                    <label [for]="'price' + i" class="text-sm font-semibold">Precio <span
+                            class="text-red-500">*</span></label>
+                    <p-inputNumber [id]="'price' + i" formControlName="price" mode="currency" currency="USD"
+                        locale="en-US" styleClass="w-full" inputStyleClass="p-inputtext-sm w-full" [min]="0"
+                        [max]="9999.99"></p-inputNumber>
+                    <small class="p-error"
+                        *ngIf="detail.get('price')?.errors?.['required'] && detail.get('price')?.touched">
+                        Requerido.
+                    </small>
+                    <small class="p-error" *ngIf="detail.get('price')?.errors?.['min'] && detail.get('price')?.touched">
+                        Debe ser mayor a 0.
+                    </small>
+                    <small class="p-error" *ngIf="detail.get('price')?.errors?.['max'] && detail.get('price')?.touched">
+                        Precio muy alto.
+                    </small>
+                </div>
+                <div class="col-12 md:col-3 flex flex-column gap-2">
+                    <label [for]="'stock' + i" class="text-sm font-semibold">Stock <span
+                            class="text-red-500">*</span></label>
+                    <p-inputNumber [id]="'stock' + i" formControlName="stock" styleClass="w-full"
+                        inputStyleClass="p-inputtext-sm w-full" [min]="0" [max]="9999"></p-inputNumber>
+                    <small class="p-error"
+                        *ngIf="detail.get('stock')?.errors?.['required'] && detail.get('stock')?.touched">
+                        Requerido.
+                    </small>
+                    <small class="p-error" *ngIf="detail.get('stock')?.errors?.['min'] && detail.get('stock')?.touched">
+                        Debe ser al menos 1.
+                    </small>
+                    <small class="p-error" *ngIf="detail.get('stock')?.errors?.['max'] && detail.get('stock')?.touched">
+                        Stock muy alto.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-content-start">
+        <p-button label="Agregar Proveedor" icon="pi pi-plus" [text]="true" size="small"
+            (onClick)="addInventoryDetail()"></p-button>
+    </div>
+
+    <div class="flex justify-content-end gap-2 mt-4">
+        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="secondary"
+            (onClick)="cancel()"></p-button>
+        <p-button label="Guardar Producto" icon="pi pi-check" type="submit" [loading]="loading()"></p-button>
+    </div>
+</form>

@@ -23,7 +23,12 @@ namespace Inventory.Application.Features.Products.Queries.GetAllProducts
 
         public async Task<Response<IEnumerable<ProductDto>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var productList = await _unitOfWork.Repository<Product>().GetAllAsync();
+            var productList = await _unitOfWork.Repository<Product>().GetAllAsync(new List<string> { 
+                "Category", 
+                "InventoryDetails", 
+                "InventoryDetails.Supplier" 
+            });
+            
             var productDtos = _mapper.Map<IEnumerable<ProductDto>>(productList);
             return new Response<IEnumerable<ProductDto>>(productDtos);
         }

@@ -32,3 +32,48 @@ body {
 ::-webkit-scrollbar-track {
     background: var(--p-surface-50, var(--surface-ground, #f8fafc));
 }
+
+.layout-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--p-surface-200);
+}
+
+.p-datatable .p-datatable-header {
+    background: transparent;
+    border: none;
+    padding: 1rem 0;
+}
+
+.p-menubar {
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid var(--p-surface-200);
+    padding: 0.5rem 2rem;
+}
+
+.p-error {
+    color: #ef4444;
+    /* Rojo profesional (Tailwind red-500) */
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Estilo para inputs con error */
+.ng-invalid.ng-touched {
+    border-color: #ef4444 !important;
+}

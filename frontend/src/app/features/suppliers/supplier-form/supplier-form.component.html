@@ -1,0 +1,54 @@
+<form [formGroup]="form" (ngSubmit)="save()" class="flex flex-column gap-3">
+    <div class="flex flex-column gap-1">
+        <label for="name" class="font-semibold">Nombre del Proveedor <span class="text-red-500">*</span></label>
+        <input pInputText id="name" formControlName="name" class="w-full" placeholder="Ej: Distribuidora Global"
+            maxlength="100" />
+        <small class="p-error" *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">
+            El nombre es obligatorio.
+        </small>
+        <small class="p-error" *ngIf="form.get('name')?.errors?.['minlength'] && form.get('name')?.touched">
+            Debe tener al menos 2 caracteres.
+        </small>
+        <small class="p-error" *ngIf="form.get('name')?.errors?.['maxlength'] && form.get('name')?.touched">
+            Máximo 100 caracteres.
+        </small>
+    </div>
+
+    <div class="flex flex-column gap-1">
+        <label for="contactEmail" class="font-semibold">Email de Contacto</label>
+        <input pInputText id="contactEmail" formControlName="contactEmail" class="w-full"
+            placeholder="proveedor@ejemplo.com" maxlength="20" />
+        <small class="p-error" *ngIf="form.get('contactEmail')?.errors?.['email'] && form.get('contactEmail')?.touched">
+            El formato del correo no es válido.
+        </small>
+        <small class="p-error"
+            *ngIf="form.get('contactEmail')?.errors?.['maxlength'] && form.get('contactEmail')?.touched">
+            Máximo 100 caracteres.
+        </small>
+    </div>
+
+    <div class="flex flex-column gap-1">
+        <label for="contactPhone" class="font-semibold">Teléfono</label>
+        <input pInputText id="contactPhone" formControlName="contactPhone" class="w-full" placeholder="Ej: 0958940173"
+            maxlength="10" pKeyFilter="num" />
+        <small class="p-error"
+            *ngIf="form.get('contactPhone')?.errors?.['pattern'] && form.get('contactPhone')?.touched">
+            Ingrese 10 números (estándar Ecuador).
+        </small>
+    </div>
+
+    <div class="flex flex-column gap-1">
+        <label for="address" class="font-semibold">Dirección</label>
+        <input pInputText id="address" formControlName="address" class="w-full" placeholder="Ej: Av. 9 de Octubre"
+            maxlength="250" />
+        <small class="p-error" *ngIf="form.get('address')?.errors?.['maxlength'] && form.get('address')?.touched">
+            Máximo 250 caracteres.
+        </small>
+    </div>
+
+    <div class="flex justify-content-end gap-2 mt-4">
+        <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="secondary"
+            (onClick)="cancel()"></p-button>
+        <p-button label="Guardar" icon="pi pi-check" type="submit" [loading]="loading()"></p-button>
+    </div>
+</form>
