@@ -1,9 +1,6 @@
 using Inventory.Domain.Entities;
 using Inventory.Infrastructure.Persistence.Contexts;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+
 
 namespace Inventory.Infrastructure.Persistence.Seeds
 {
@@ -23,12 +20,7 @@ namespace Inventory.Infrastructure.Persistence.Seeds
                     CreatedAt = DateTime.UtcNow
                 };
 
-                var passwordHasher = new PasswordHasher<User>();
-
-                adminUser.PasswordHash = passwordHasher.HashPassword(
-                    adminUser,
-                    "admin"
-                );
+                adminUser.PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin");
 
                 await context.Users.AddAsync(adminUser);
                 await context.SaveChangesAsync();

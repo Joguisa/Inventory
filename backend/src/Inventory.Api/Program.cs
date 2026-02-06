@@ -1,25 +1,34 @@
+using Inventory.Application;
 using Inventory.Infrastructure;
-using Inventory.Infrastructure.Persistence.Contexts;
-using Inventory.Infrastructure.Persistence.Seeds;
+using Inventory.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerExtension();
+builder.Services.AddCorsExtension();
+
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
-    await ContextSeed.SeedAsync(context);
-}
+app.UseErrorHandlingMiddleware();
+
+await app.UseDbInitialization();
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAll");
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
