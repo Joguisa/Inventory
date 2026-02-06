@@ -42,7 +42,7 @@ export class AuthService {
      */
     login(email: string, password: string): Observable<ApiResponse<AuthenticateResponse>> {
         const body: LoginRequest = { email, password };
-        const url = `${this.apiUrl}/auth/login`;
+        const url = `${this.apiUrl}/Account/authenticate`;
         return this.http
             .post<ApiResponse<AuthenticateResponse>>(url, body)
             .pipe(

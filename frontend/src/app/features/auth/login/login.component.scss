@@ -1,0 +1,11 @@
+.p-error {
+    color: #e24c4c;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+:host ::ng-deep {
+    .p-message-error {
+        margin: 1rem 0;
+    }
+}
