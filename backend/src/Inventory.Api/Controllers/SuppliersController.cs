@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
 using Inventory.Application.Features.Suppliers.Commands.CreateSupplier;
-using Inventory.Application.Features.Suppliers.Commands.UpdateSupplier;
 using Inventory.Application.Features.Suppliers.Commands.DeleteSupplier;
+using Inventory.Application.Features.Suppliers.Commands.UpdateSupplier;
 using Inventory.Application.Features.Suppliers.Queries.GetAllSuppliers;
 using Inventory.Application.Features.Suppliers.Queries.GetSupplierById;
 using Microsoft.AspNetCore.Authorization;

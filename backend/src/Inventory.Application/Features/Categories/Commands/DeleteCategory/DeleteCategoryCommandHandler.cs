@@ -27,6 +27,7 @@ namespace Inventory.Application.Features.Categories.Commands.DeleteCategory
             }
 
             await _unitOfWork.Repository<Category>().DeleteAsync(category);
+
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return new Response<int>(category.Id, "Categoría eliminada correctamente");

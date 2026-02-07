@@ -1,11 +1,9 @@
-using System.Threading.Tasks;
 using Inventory.Application.Features.Categories.Commands.CreateCategory;
-using Inventory.Application.Features.Categories.Commands.UpdateCategory;
 using Inventory.Application.Features.Categories.Commands.DeleteCategory;
+using Inventory.Application.Features.Categories.Commands.UpdateCategory;
 using Inventory.Application.Features.Categories.Queries.GetAllCategories;
-using Microsoft.AspNetCore.Mvc;
-
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Api.Controllers
 {

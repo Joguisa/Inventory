@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
 using Inventory.Application.Features.Products.Commands.CreateProduct;
-using Inventory.Application.Features.Products.Commands.UpdateProduct;
 using Inventory.Application.Features.Products.Commands.DeleteProduct;
+using Inventory.Application.Features.Products.Commands.UpdateProduct;
 using Inventory.Application.Features.Products.Queries.GetAllProducts;
 using Inventory.Application.Features.Products.Queries.GetProductById;
 using Microsoft.AspNetCore.Authorization;

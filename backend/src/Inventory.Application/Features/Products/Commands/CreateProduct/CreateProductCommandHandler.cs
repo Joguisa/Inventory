@@ -1,8 +1,7 @@
-using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using Inventory.Application.Wrappers;
 using Inventory.Domain.Entities;
+using Inventory.Domain.Enums;
 using Inventory.Domain.Interfaces;
 using MediatR;
 
@@ -23,6 +22,26 @@ namespace Inventory.Application.Features.Products.Commands.CreateProduct
         {
             var product = _mapper.Map<Product>(request);
             await _unitOfWork.Repository<Product>().AddAsync(product);
+
+            // TODO: Implementar transacciones
+            if (request.InventoryDetails != null && request.InventoryDetails.Any())
+            {
+                foreach (var detail in request.InventoryDetails){
+                    if(detail.Stock > 0){
+                        var transation  = new InventoryTransaction 
+                        {
+                            Product = product,
+                            TransactionType = TransactionType.In,
+                            Quantity = detail.Stock,
+                            TransactionDate = DateTime.Now,
+                            Reference = "Stock inicial",
+                            CreatedBy = "System"
+
+                        };
+                        await _unitOfWork.Repository<InventoryTransaction>().AddAsync(transation);
+                    }
+                }
+            }
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             return new Response<int>(product.Id, "Producto creado correctamente");
         }

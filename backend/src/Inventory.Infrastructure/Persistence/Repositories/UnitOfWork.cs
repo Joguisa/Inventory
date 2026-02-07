@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Threading;
-using System.Threading.Tasks;
 using Inventory.Domain.Entities;
 using Inventory.Domain.Interfaces;
 using Inventory.Infrastructure.Persistence.Contexts;
+using System.Collections;
 
 namespace Inventory.Infrastructure.Persistence.Repositories
 {

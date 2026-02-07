@@ -6,6 +6,7 @@ using AutoMapper;
 using Inventory.Application.Exceptions;
 using Inventory.Application.Wrappers;
 using Inventory.Domain.Entities;
+using Inventory.Domain.Enums;
 using Inventory.Domain.Interfaces;
 using MediatR;
 
@@ -45,6 +46,18 @@ namespace Inventory.Application.Features.Products.Commands.UpdateProduct
             {
                 var newDetail = _mapper.Map<ProductInventoryDetail>(detailCommand);
                 product.InventoryDetails.Add(newDetail);
+
+                // TODO: registrar ajuste si hay stock
+                var transaction = new InventoryTransaction
+                {
+                    ProductId = product.Id,
+                    TransactionType = TransactionType.Adjustment,
+                    Quantity = newDetail.Stock,
+                    TransactionDate = DateTime.UtcNow,
+                    Reference = "Edición de Producto"
+                };
+
+                await _unitOfWork.Repository<InventoryTransaction>().AddAsync(transaction);
             }
 
             await _unitOfWork.Repository<Product>().UpdateAsync(product);

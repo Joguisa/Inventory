@@ -19,8 +19,10 @@ namespace Inventory.Application.Mappings
             
             CreateMap<CreateCategoryCommand, Category>();
             CreateMap<UpdateCategoryCommand, Category>();
+
             CreateMap<CreateSupplierCommand, Supplier>();
             CreateMap<CreateProductCommand, Product>();
+
             CreateMap<UpdateProductCommand, Product>();
             CreateMap<CreateProductInventoryDetailCommand, ProductInventoryDetail>();
             CreateMap<UpdateProductInventoryDetailCommand, ProductInventoryDetail>();

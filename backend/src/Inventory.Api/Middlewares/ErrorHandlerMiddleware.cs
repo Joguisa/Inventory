@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Inventory.Application.Exceptions;
 using Inventory.Application.Wrappers;
-using Microsoft.AspNetCore.Http;
+using System.Net;
+using System.Text.Json;
 
 namespace Inventory.Api.Middlewares
 {
